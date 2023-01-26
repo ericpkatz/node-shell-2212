@@ -1,4 +1,7 @@
 const ls = require('./ls');
+const pwd = require('./pwd');
+const date = require('./date');
+const cat = require('./cat');
 //Output a prompt
 process.stdout.write('prompt > ');
 
@@ -11,10 +14,14 @@ const done = (str) => {
 process.stdin.on('data', (data) => {
   const cmd = data.toString().trim(); //remove the newline
   if(cmd === 'pwd'){
-    done(__dirname);
+    pwd(done);
   }
   else if(cmd === 'date'){
-    done(new Date().toString());
+    date(done);
+  }
+  else if(cmd.startsWith('cat')){
+    const file = cmd.split(' ')[1];
+    cat(done, file);
   }
   else if(cmd === 'ls'){
     ls(done);
